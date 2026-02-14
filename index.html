@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🍬 Big Bananza Deluxe Slot 🍬</title>
+<title>🍬 Big Bananza Deluxe Slot 7x7 🍬</title>
 <style>
-/* ===== Фон страницы ===== */
 body {
   margin: 0;
   padding: 0;
@@ -19,7 +18,6 @@ body {
   color: #fff;
 }
 
-/* ===== Заголовок ===== */
 h1 {
   margin-top: 2vh;
   font-size: 8vw;
@@ -33,22 +31,20 @@ h1 {
   100% { text-shadow: 2px 2px 10px #000, 0 0 20px #ff69b4; }
 }
 
-/* ===== Слот-контейнер ===== */
 #slot {
   display: flex;
   margin: 3vh 0;
   padding: 2vw;
-  height: 55vw; /* адаптивная высота */
+  height: 80vw; /* под 7 символов */
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255,255,0,0.5), 0 0 40px rgba(255,182,193,0.3);
   background-color: rgba(0,0,0,0.2);
   overflow: hidden;
 }
 
-/* ===== Катушки ===== */
 .reel {
-  width: 12vw;
-  height: 55vw;
+  width: 10vw;
+  height: 80vw;
   margin: 0 0.5vw;
   border-radius: 10px;
   background: linear-gradient(to bottom, rgba(255,182,193,0.6), rgba(255,105,180,0.4));
@@ -57,15 +53,15 @@ h1 {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  font-size: 8vw;
+  font-size: 7vw;
   position: relative;
   box-shadow: 0 0 10px rgba(255,182,193,0.5);
 }
 
 .symbol {
-  width: 12vw;
-  height: 12vw;
-  line-height: 12vw;
+  width: 10vw;
+  height: 10vw;
+  line-height: 10vw;
   text-align: center;
   transition: transform 0.3s, text-shadow 0.3s;
 }
@@ -75,20 +71,18 @@ h1 {
   text-shadow: 0 0 15px yellow, 0 0 30px gold;
 }
 
-/* ===== Падающие фрукты ===== */
 .falling {
   position: absolute;
-  font-size: 6vw;
+  font-size: 5vw;
   animation: fall 2s linear forwards;
   text-shadow: 1px 1px 5px #000;
 }
 @keyframes fall {
-  0% { top: -10vw; opacity: 1; transform: rotate(0deg);}
+  0% { top: -12vw; opacity: 1; transform: rotate(0deg);}
   50% { transform: rotate(180deg);}
   100% { top: 120vw; opacity: 0; transform: rotate(360deg);}
 }
 
-/* ===== Джекпот ===== */
 .jackpot {
   animation: jackpotAnim 1s infinite alternate;
   font-size: 8vw;
@@ -100,7 +94,6 @@ h1 {
   100% { color: gold; text-shadow: 0 0 10px #fff; transform: scale(1); }
 }
 
-/* ===== Кнопка Spin ===== */
 button {
   font-size: 6vw;
   padding: 3vw 8vw;
@@ -117,18 +110,17 @@ button:hover {
   box-shadow: 0 8px 25px rgba(255,105,180,0.7);
 }
 
-/* ===== Адаптация для экранов <600px ===== */
 @media (max-width: 600px){
-  #slot { height: 70vw; padding: 3vw; }
-  .reel { width: 10vw; height: 70vw; font-size: 7vw; }
-  .symbol { width: 10vw; height: 10vw; line-height: 10vw; }
+  #slot { height: 90vw; padding: 3vw; }
+  .reel { width: 12vw; height: 90vw; font-size: 6vw; }
+  .symbol { width: 12vw; height: 12vw; line-height: 12vw; }
   button { font-size: 7vw; padding: 4vw 10vw; }
 }
 </style>
 </head>
 <body>
 
-<h1>🍬 Big Bananza Deluxe 🍬</h1>
+<h1>🍬 Big Bananza 7x7 🍬</h1>
 
 <audio id="bgMusic" src="bananza.mp3" loop></audio>
 <audio id="jackpotSound" src="bananza.mp3"></audio>
@@ -163,7 +155,6 @@ const bgMusic = document.getElementById("bgMusic");
 const jackpotSound = document.getElementById("jackpotSound");
 let musicStarted = false;
 
-// ===== Функция вращения =====
 function spin() {
   if(!musicStarted){
     bgMusic.play().catch(err=>console.log("Музыка заблокирована"));
@@ -176,7 +167,7 @@ function spin() {
   for(let i=0;i<reels.length;i++){
     const reel = reels[i];
     const reelResult = [];
-    for(let j=0;j<4;j++){
+    for(let j=0;j<7;j++){
       const sym = symbols[Math.floor(Math.random()*symbols.length)];
       const div = document.createElement("div");
       div.className="symbol";
@@ -184,7 +175,6 @@ function spin() {
       reel.appendChild(div);
       reelResult.push(sym);
 
-      // падающие фрукты
       const fruit = document.createElement("div");
       fruit.className="falling";
       fruit.style.left=Math.random()*window.innerWidth+"px";
@@ -196,18 +186,20 @@ function spin() {
     }
     results.push(reelResult);
   }
-  setTimeout(()=>checkWin(results), 1200);
+  setTimeout(()=>checkWin(results), 1500);
 }
 
-// ===== Проверка линий с подсветкой, джекпотом и множителем =====
 function checkWin(results){
   const lines = [
-    [0,0,0,0,0,0,0], // верхняя
-    [1,1,1,1,1,1,1], // второй
-    [2,2,2,2,2,2,2], // третий
-    [3,3,3,3,3,3,3], // нижняя
-    [0,1,2,3,2,1,0], // диагональ 1
-    [3,2,1,0,1,2,3]  // диагональ 2
+    [0,0,0,0,0,0,0],
+    [1,1,1,1,1,1,1],
+    [2,2,2,2,2,2,2],
+    [3,3,3,3,3,3,3],
+    [4,4,4,4,4,4,4],
+    [5,5,5,5,5,5,5],
+    [6,6,6,6,6,6,6],
+    [0,1,2,3,4,5,6],
+    [6,5,4,3,2,1,0]
   ];
 
   let totalPoints = 0;
@@ -220,7 +212,6 @@ function checkWin(results){
     lineSymbols.forEach(sym=>counts[sym]=(counts[sym]||0)+1);
     const maxCount = Math.max(...Object.values(counts));
 
-    // Подсветка выигрышной линии
     if(maxCount>=4){
       line.forEach((row,reelIndex)=>{
         reels[reelIndex].children[row].classList.add("win-highlight");
@@ -228,7 +219,6 @@ function checkWin(results){
       });
     }
 
-    // Множители бонусных символов 🍭
     const bonusCount = lineSymbols.filter(s=>s==="🍭").length;
     const lineMultiplier = bonusCount+1;
 
@@ -244,9 +234,7 @@ function checkWin(results){
     message.textContent="🎉 JACKPOT!!! 🎉";
     message.classList.add("jackpot");
     jackpotSound.play();
-
-    // Дополнительные падающие фрукты
-    for(let i=0;i<20;i++){
+    for(let i=0;i<30;i++){
       const fruit = document.createElement("div");
       fruit.className="falling";
       fruit.style.left=Math.random()*window.innerWidth+"px";
@@ -255,7 +243,6 @@ function checkWin(results){
       document.body.appendChild(fruit);
       setTimeout(()=>fruit.remove(),2500);
     }
-
     setTimeout(()=>message.classList.remove("jackpot"),4000);
   } else if(totalPoints>0){
     message.textContent=`Вы выиграли ${totalPoints} очков! 🎉`;
@@ -271,4 +258,3 @@ spinBtn.addEventListener("click", spin);
 
 </body>
 </html>
-
