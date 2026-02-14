@@ -12,7 +12,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background: url('bananza1.jpg') no-repeat center center fixed;
   background-size: cover;
-  overflow: hidden;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,8 +21,9 @@ body {
 
 /* ===== Заголовок ===== */
 h1 {
-  margin-top: 20px;
-  font-size: 50px;
+  margin-top: 2vh;
+  font-size: 8vw;
+  text-align: center;
   text-shadow: 2px 2px 10px #000, 0 0 20px #ff69b4;
   animation: titleGlow 2s infinite alternate;
 }
@@ -35,38 +36,37 @@ h1 {
 /* ===== Слот-контейнер ===== */
 #slot {
   display: flex;
-  margin: 40px 0;
-  position: relative;
-  height: 160px;
-  padding: 10px;
-  border-radius: 20px;
-  box-shadow: 0 0 50px rgba(255,255,0,0.5), 0 0 100px rgba(255,182,193,0.3);
+  margin: 3vh 0;
+  padding: 2vw;
+  height: 55vw; /* адаптивная высота */
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,0,0.5), 0 0 40px rgba(255,182,193,0.3);
   background-color: rgba(0,0,0,0.2);
+  overflow: hidden;
 }
 
 /* ===== Катушки ===== */
 .reel {
-  width: 80px;
-  height: 160px;
-  margin: 0 5px;
-  border-radius: 20px;
+  width: 12vw;
+  height: 55vw;
+  margin: 0 0.5vw;
+  border-radius: 10px;
   background: linear-gradient(to bottom, rgba(255,182,193,0.6), rgba(255,105,180,0.4));
-  border: 3px solid #fff;
+  border: 2px solid #fff;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  overflow: hidden;
-  font-size: 50px;
+  font-size: 8vw;
   position: relative;
-  box-shadow: 0 0 15px rgba(255,182,193,0.5);
+  box-shadow: 0 0 10px rgba(255,182,193,0.5);
 }
 
 .symbol {
-  width: 80px;
-  height: 80px;
+  width: 12vw;
+  height: 12vw;
+  line-height: 12vw;
   text-align: center;
-  line-height: 80px;
   transition: transform 0.3s, text-shadow 0.3s;
 }
 
@@ -75,21 +75,23 @@ h1 {
   text-shadow: 0 0 15px yellow, 0 0 30px gold;
 }
 
+/* ===== Падающие фрукты ===== */
 .falling {
   position: absolute;
-  font-size: 40px;
+  font-size: 6vw;
   animation: fall 2s linear forwards;
   text-shadow: 1px 1px 5px #000;
 }
 @keyframes fall {
-  0% { top: -50px; opacity: 1; transform: rotate(0deg);}
+  0% { top: -10vw; opacity: 1; transform: rotate(0deg);}
   50% { transform: rotate(180deg);}
-  100% { top: 500px; opacity: 0; transform: rotate(360deg);}
+  100% { top: 120vw; opacity: 0; transform: rotate(360deg);}
 }
 
+/* ===== Джекпот ===== */
 .jackpot {
   animation: jackpotAnim 1s infinite alternate;
-  font-size: 36px;
+  font-size: 8vw;
   text-shadow: 0 0 10px #fff, 0 0 30px gold, 0 0 50px yellow;
 }
 @keyframes jackpotAnim {
@@ -98,19 +100,29 @@ h1 {
   100% { color: gold; text-shadow: 0 0 10px #fff; transform: scale(1); }
 }
 
+/* ===== Кнопка Spin ===== */
 button {
-  font-size: 28px;
-  padding: 15px 40px;
-  border-radius: 15px;
+  font-size: 6vw;
+  padding: 3vw 8vw;
+  border-radius: 10px;
   background: linear-gradient(to right, #ff69b4, #ff1493);
   box-shadow: 0 5px 15px rgba(0,0,0,0.4);
   cursor: pointer;
   color: white;
   transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 3vh;
 }
 button:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 25px rgba(255,105,180,0.7);
+}
+
+/* ===== Адаптация для экранов <600px ===== */
+@media (max-width: 600px){
+  #slot { height: 70vw; padding: 3vw; }
+  .reel { width: 10vw; height: 70vw; font-size: 7vw; }
+  .symbol { width: 10vw; height: 10vw; line-height: 10vw; }
+  button { font-size: 7vw; padding: 4vw 10vw; }
 }
 </style>
 </head>
@@ -176,7 +188,7 @@ function spin() {
       const fruit = document.createElement("div");
       fruit.className="falling";
       fruit.style.left=Math.random()*window.innerWidth+"px";
-      fruit.style.fontSize=(30+Math.random()*30)+"px";
+      fruit.style.fontSize=(5+Math.random()*5)+"vw";
       fruit.textContent=sym;
       fruit.style.transform = `rotate(${Math.random()*360}deg)`;
       document.body.appendChild(fruit);
@@ -238,7 +250,7 @@ function checkWin(results){
       const fruit = document.createElement("div");
       fruit.className="falling";
       fruit.style.left=Math.random()*window.innerWidth+"px";
-      fruit.style.fontSize=(20+Math.random()*40)+"px";
+      fruit.style.fontSize=(4+Math.random()*5)+"vw";
       fruit.textContent=symbols[Math.floor(Math.random()*symbols.length)];
       document.body.appendChild(fruit);
       setTimeout(()=>fruit.remove(),2500);
@@ -259,3 +271,4 @@ spinBtn.addEventListener("click", spin);
 
 </body>
 </html>
+
